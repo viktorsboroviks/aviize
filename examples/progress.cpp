@@ -1,14 +1,14 @@
 #include <unistd.h>
+
 #include <iomanip>
 #include <iostream>
 
 #include "aviize.hpp"
 
-
-const size_t MAX_I = 50000;
+const size_t MAX_I    = 50000;
 const double SLEEP_US = 60;
 
-int main ()
+int main()
 {
     aviize::Progress p(0, MAX_I);
 
@@ -27,7 +27,7 @@ int main ()
         p.print();
         usleep(SLEEP_US);
     }
-    p.clear();
+    aviize::erase_line();
 
     std::cout << "test: progress bar" << std::endl;
     for (size_t i = 0; i < MAX_I; i++) {
@@ -36,7 +36,7 @@ int main ()
         p.print();
         usleep(SLEEP_US);
     }
-    p.clear();
+    aviize::erase_line();
 
     std::cout << "test: total" << std::endl;
     for (size_t i = 0; i < MAX_I; i++) {
@@ -45,7 +45,7 @@ int main ()
         p.print();
         usleep(SLEEP_US);
     }
-    p.clear();
+    aviize::erase_line();
 
     std::cout << "test: pct" << std::endl;
     for (size_t i = 0; i < MAX_I; i++) {
@@ -54,7 +54,7 @@ int main ()
         p.print();
         usleep(SLEEP_US);
     }
-    p.clear();
+    aviize::erase_line();
 
     std::cout << "test: eta" << std::endl;
     for (size_t i = 0; i < MAX_I; i++) {
@@ -63,7 +63,7 @@ int main ()
         p.print();
         usleep(SLEEP_US);
     }
-    p.clear();
+    aviize::erase_line();
 
     std::cout << "test: custom text" << std::endl;
     for (size_t i = 0; i < MAX_I; i++) {
@@ -72,7 +72,9 @@ int main ()
         p.print();
         usleep(SLEEP_US);
     }
-    p.clear();
+    aviize::erase_line();
 
+    // clean up all previously printed lines
+    aviize::erase_lines(6);
     return 0;
 }

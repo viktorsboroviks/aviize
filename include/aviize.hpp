@@ -1,11 +1,31 @@
 #include <cassert>
-#include <string>
-#include <sstream>
+#include <chrono>
 #include <iomanip>
 #include <iostream>
-#include <chrono>
+#include <sstream>
+#include <string>
 
 namespace aviize {
+
+const std::string ASCII_ESC_CLEAR_LINE = "\033[K";
+const std::string ASCII_ESC_MOVE_UP    = "\033[F";
+
+static std::ostream& out_stream = std::cerr;
+
+void erase_line(std::ostream& os = out_stream)
+{
+    // move the cursor to the beginning of the current line and clear it
+    os << ASCII_ESC_CLEAR_LINE;
+    os << std::flush;
+}
+
+void erase_lines(size_t n_lines, std::ostream& os = out_stream)
+{
+    for (size_t i = 0; i < n_lines; i++) {
+        os << ASCII_ESC_MOVE_UP;
+        erase_line(os);
+    }
+}
 
 std::string seconds_to_hhmmss_string(const double seconds)
 {
@@ -37,7 +57,6 @@ private:
     }
 
 public:
-    std::ostream &os       = std::cerr;
     char c_opening_bracket = '[';
     char c_closing_bracket = ']';
     char c_fill            = '.';
@@ -103,7 +122,8 @@ public:
         assert(n <= n_max);
 
         std::stringstream ss;
-        ss << std::fixed << std::setprecision(1) << (double)n / n_max * 100 << "%";
+        ss << std::fixed << std::setprecision(1) << (double)n / n_max * 100
+           << "%";
         return ss.str();
     }
 
@@ -140,15 +160,8 @@ public:
             text += " ";
         }
         text += "\r";
-        os << text;
-    }
-
-    void clear()
-    {
-        // move the cursor to the beginning of the current line and clear it
-        os << "\r\033[K";
-        os << std::flush;
+        out_stream << text;
     }
 };
 
-}
+}  // namespace aviize
