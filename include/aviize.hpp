@@ -63,7 +63,6 @@ public:
     char c_no_fill         = ' ';
     size_t c_bar_len       = 10;
     size_t update_period;
-    size_t current_n;
     size_t n_min;
     size_t n_max;
     std::string text;
@@ -138,8 +137,6 @@ public:
 
     void print()
     {
-        std::stringstream ss;
-
         // if update_period specified:
         // to not overload the console - update only at update_period
         if (update_period > 1) {
