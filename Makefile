@@ -48,3 +48,4 @@ cppcheck-lint: \
 
 clean:
 	rm -rf `find . -name "*.o"`
+	rm -rf `find . -name "*.txt"`
