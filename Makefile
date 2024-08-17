@@ -2,9 +2,9 @@
 	all \
 	examples \
 	format \
-	clang-format \
+	format-cpp \
 	lint \
-	cppcheck \
+	lint-cpp \
 	clean
 
 all: examples
@@ -17,16 +17,16 @@ progress.o: examples/progress.cpp
 		-I./include \
 		examples/progress.cpp -o $@
 
-format: clang-format
+format: format-cpp
 
-clang-format: \
+format-cpp: \
 		include/aviize.hpp \
 		examples/progress.cpp
 	clang-format -i $^
 
-lint: cppcheck
+lint: lint-cpp
 
-cppcheck: \
+lint-cpp: \
 		include/aviize.hpp \
 		examples/progress.cpp
 	cppcheck \
