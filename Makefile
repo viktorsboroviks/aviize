@@ -4,7 +4,7 @@
 	format \
 	clang-format \
 	lint \
-	cppcheck-lint \
+	cppcheck \
 	clean
 
 all: examples
@@ -24,9 +24,9 @@ clang-format: \
 		examples/progress.cpp
 	clang-format -i $^
 
-lint: cppcheck-lint
+lint: cppcheck
 
-cppcheck-lint: \
+cppcheck: \
 		include/aviize.hpp \
 		examples/progress.cpp
 	cppcheck \
