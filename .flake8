@@ -1,0 +1,5 @@
+[flake8]
+# resolve conflicts with `black`
+# ref https://github.com/psf/black/issues/315
+extend-ignore = E203
+max-line-length = 88

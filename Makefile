@@ -3,8 +3,10 @@
 	examples \
 	format \
 	format-cpp \
+	format-python \
 	lint \
 	lint-cpp \
+	lint-python \
 	clean
 
 all: examples
@@ -17,14 +19,17 @@ progress.o: examples/progress.cpp
 		-I./include \
 		examples/progress.cpp -o $@
 
-format: format-cpp
+format: format-cpp format-python
 
 format-cpp: \
 		include/aviize.hpp \
 		examples/progress.cpp
 	clang-format -i $^
 
-lint: lint-cpp
+format-python: python/aviize.py
+	black $^
+
+lint: lint-cpp lint-python
 
 lint-cpp: \
 		include/aviize.hpp \
@@ -45,6 +50,10 @@ lint-cpp: \
 		--checkers-report=cppcheck_report.txt \
 		-I./include \
 		$^
+
+lint-python: python/aviize.py
+	pylint $^
+	flake8 $^
 
 clean:
 	rm -rf `find . -name "*.o"`
