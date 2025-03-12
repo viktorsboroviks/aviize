@@ -12,19 +12,43 @@ const std::string ASCII_ESC_MOVE_UP    = "\033[F";
 
 static std::ostream& out_stream = std::cerr;
 
-void erase_line(std::ostream& os = out_stream)
+// usage:
+// 1. construct stringstream using below functions
+// 2. print stringstream to out_stream at once
+//    (this prevents any terminal-specific issues)
+//
+// example - periodic update of 2 lines:
+//    std::stringstream ss{};
+//    if (i > 0)
+//        erase_line(ss, 2);
+//    ss << "line: " << x << std::endl;
+//    ss << "line: " << y << std::endl;
+//    print(ss);
+
+void print_tabs(std::stringstream& ss, size_t n_tabs)
 {
-    // move the cursor to the beginning of the current line and clear it
-    os << ASCII_ESC_CLEAR_LINE;
-    os << std::flush;
+    for (size_t n = 0; n < n_tabs; n++) {
+        ss << "\t";
+    }
 }
 
-void erase_lines(size_t n_lines, std::ostream& os = out_stream)
+void erase_line(std::stringstream& ss)
+{
+    // move the cursor to the beginning of the current line and clear it
+    ss << ASCII_ESC_CLEAR_LINE;
+}
+
+void erase_lines(std::stringstream& ss, size_t n_lines)
 {
     for (size_t i = 0; i < n_lines; i++) {
-        os << ASCII_ESC_MOVE_UP;
-        erase_line(os);
+        ss << ASCII_ESC_MOVE_UP;
+        erase_line(ss);
     }
+}
+
+void print(std::stringstream& ss, std::ostream& os = out_stream)
+{
+    os << ss.str();
 }
 
 std::string seconds_to_hhmmss_string(const double seconds)
