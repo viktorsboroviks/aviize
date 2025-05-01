@@ -34,10 +34,23 @@ void print_tabs(std::stringstream& ss, size_t n_tabs)
     }
 }
 
+void print_tabs(std::string& str, size_t n_tabs)
+{
+    for (size_t n = 0; n < n_tabs; n++) {
+        str += "\t";
+    }
+}
+
 void erase_line(std::stringstream& ss)
 {
     // move the cursor to the beginning of the current line and clear it
     ss << ASCII_ESC_CLEAR_LINE;
+}
+
+void erase_line(std::string& str)
+{
+    // move the cursor to the beginning of the current line and clear it
+    str += ASCII_ESC_CLEAR_LINE;
 }
 
 void erase_lines(std::stringstream& ss, size_t n_lines)
@@ -48,9 +61,22 @@ void erase_lines(std::stringstream& ss, size_t n_lines)
     }
 }
 
-void print(std::stringstream& ss, std::ostream& os = out_stream)
+void erase_lines(std::string& str, size_t n_lines)
+{
+    for (size_t i = 0; i < n_lines; i++) {
+        str += ASCII_ESC_MOVE_UP;
+        erase_line(str);
+    }
+}
+
+void print(const std::stringstream& ss, std::ostream& os = out_stream)
 {
     os << ss.str();
+}
+
+void print(const std::string& str, std::ostream& os = out_stream)
+{
+    os << str;
 }
 
 std::string seconds_to_hhmmss_string(const double seconds)
