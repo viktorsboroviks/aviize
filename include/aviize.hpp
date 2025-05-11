@@ -167,7 +167,7 @@ public:
 
         std::stringstream ss;
         const size_t n_max_strlen = std::to_string(n_max).length();
-        ss << " " << std::setfill('0') << std::setw(n_max_strlen) << n;
+        ss << std::setfill('0') << std::setw(n_max_strlen) << n;
         ss << "/" << n_max;
         return ss.str();
     }
@@ -220,6 +220,26 @@ public:
         }
         text += "\r";
         out_stream << text;
+    }
+
+    void reset()
+    {
+        // erase all text lines from screen
+        size_t n_nl = 0;
+        for (size_t i = 0; i < text.size(); i++) {
+            if (text[i] == '\n') {
+                n_nl++;
+            }
+        }
+        text.clear();
+
+        if (n_nl > 0) {
+            erase_lines(text, n_nl);
+            print();
+            text.clear();
+        }
+
+        assert(text.empty());
     }
 };
 
