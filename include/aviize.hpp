@@ -14,6 +14,11 @@ const std::string ASCII_ESC_MOVE_UP    = "\033[F";
 
 static std::ostream& out_stream = std::cerr;
 
+bool last_line_empty(const std::string& text)
+{
+    return (text.empty() || text.back() == '\n' || text.back() == '\r');
+}
+
 // usage:
 // 1. construct stringstream using below functions
 // 2. print stringstream to out_stream at once
@@ -185,6 +190,11 @@ public:
 
         double eta_s = _get_eta_s(n, update_period);
         return seconds_to_hhmmss_string(eta_s);
+    }
+
+    bool last_line_empty() const
+    {
+        return aviize::last_line_empty(text);
     }
 
     void print()

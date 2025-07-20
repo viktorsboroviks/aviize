@@ -18,7 +18,6 @@ int main()
     aviize::Progress p(0, MAX_I);
 
     std::cout << "test: all" << std::endl;
-    std::stringstream ss{};
     for (size_t i = 0; i < MAX_I; i++) {
         p.text.clear();
         p.text += p.str_progress_bar(i);

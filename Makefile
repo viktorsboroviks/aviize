@@ -11,9 +11,9 @@
 
 all: examples
 
-examples: progress.o
+examples: progress.out
 
-progress.o: examples/progress.cpp
+progress.out: examples/progress.cpp
 	g++ -Wall -Wextra -Werror -Wpedantic \
 		-std=c++20 -O3 \
 		-I./include \
@@ -56,5 +56,5 @@ lint-python: python/aviize.py
 	flake8 $^
 
 clean:
-	rm -rf `find . -name "*.o"`
+	rm -rf `find . -name "*.out"`
 	rm -rf `find . -name "*.txt"`
